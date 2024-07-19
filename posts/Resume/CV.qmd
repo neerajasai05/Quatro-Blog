@@ -1,0 +1,58 @@
+---
+title: "Neeraja Sai Magisetti Resume"
+author: "Neeraja Sai Magisetti"
+date: "2024-06-28"
+categories: [resume, profile, projects, education]
+image: "Neeraja.jpg"
+---
+
+# Neeraja Sai Magisetti
+
+## Profile
+Python developers specialize in writing server-side web application logic using the Python programming language. They create clean, efficient, and manageable code, build backend products, and integrate user content. They manage data-related tasks such as data collection and analysis and create RESTful APIs. Knowledge of data and management systems is also important, as is a good familiarity with Python libraries and frameworks. Python developers need to have good problem-solving skills, attention to detail, and the ability to work independently and collaboratively.
+
+## Certificates
+- Certification on SQL in LinkedIn.
+- Certification on Cloud Computing for IOT in LinkedIn.
+- Certification on Cloud Security in LinkedIn.
+
+## Education
+### Master of Information Assurance and System
+- Jacksonville State University
+- Graduated in the top 5% of my class.
+- GPA: 3.3
+
+### Bachelor of Computer Sciences
+- Lakireddy Balareddy Engineering College, Bapatla
+- GPA: 3.0
+
+## Projects
+### Report on Containerization Technologies (Docker, Podman, and LXC/LXD)
+Docker containerization revolutionizes software delivery by providing secure, isolated environments for applications, ensuring portability across different platforms, and enhancing resource efficiency compared to virtual machines. It enables rapid scaling, fast development, and deployment cycles, and integrates seamlessly into CI/CD pipelines. This technology supports microservices architecture and fosters collaboration between development and operations teams, leading to more agile and reliable software delivery. Embracing Docker helps achieve greater efficiency and future-proofs applications in an evolving containerization landscape.
+
+### Restaurant Automation
+The main purpose of the proposed system is to allow the users that are managers, hosts, servers, busboys, and chefs to perform their responsibilities efficiently. This system will help managers to manage sales data, employee status, inventory data, and other administrative work. This will let the server lessen the burden of taking orders and sending them to the kitchen physically and running back and forth from the kitchen and table. It will allow the server to take orders and just send them to the chef without visiting the kitchen. The system allows the host to look at the status of the tables whether they are available or not.
+
+## Details
+**Email**: [neerajasai.magisetti@gmail.com](mailto:neerajasai.magisetti@gmail.com)  
+**Contact**: +1 (256) 251-1244  
+**LinkedIn**: [https://www.linkedin.com/in/neeraja-sai-magisetti-6a2711279](https://www.linkedin.com/in/neeraja-sai-magisetti-6a2711279)
+
+## Skills
+- Python Programming
+- C Programming
+- Pandas
+- HTML
+- SQL
+- DBMS
+- AWS
+- DevOps
+- Neural Networks
+- Data Structures
+- Leadership Skills
+- Microsoft Office
+- Agile Methodologies
+
+## Languages
+- English
+- Telugu

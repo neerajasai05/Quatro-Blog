@@ -1,0 +1,306 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  16,
+]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage[]{libertine}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[top=10mm,left=15mm,right=15mm,bottom=5mm,heightrounded]{geometry}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{multicol}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage{libertine}
+\usepackage{wrapfig}
+\pagestyle{empty}
+\setlength{\multicolsep}{2pt plus 1.0pt minus 0.75pt}% 50% of original values
+\setlength{\columnsep}{3em}
+title: "Neeraja Sai Magisetti Resume"
+author: "Neeraja Sai Magisetti"
+date: "2024-06-28"
+categories: [resume, profile, projects, education]
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\author{}
+\date{}
+
+\begin{document}
+
+
+\section{Neeraja Sai Magisetti}\label{neeraja-sai-magisetti}
+
+\subsection{Profile}\label{profile}
+
+Python developers specialize in writing server-side web application
+logic using the Python programming language. They create clean,
+efficient, and manageable code, build backend products, and integrate
+user content. They manage data-related tasks such as data collection and
+analysis and create RESTful APIs. Knowledge of data and management
+systems is also important, as is a good familiarity with Python
+libraries and frameworks. Python developers need to have good
+problem-solving skills, attention to detail, and the ability to work
+independently and collaboratively.
+
+\subsection{Certificates}\label{certificates}
+
+\begin{itemize}
+\tightlist
+\item
+  Certification on SQL in LinkedIn.
+\item
+  Certification on Cloud Computing for IOT in LinkedIn.
+\item
+  Certification on Cloud Security in LinkedIn.
+\end{itemize}
+
+\subsection{Education}\label{education}
+
+\subsubsection{Master of Information Assurance and
+System}\label{master-of-information-assurance-and-system}
+
+\begin{itemize}
+\tightlist
+\item
+  Jacksonville State University
+\item
+  Graduated in the top 5\% of my class.
+\item
+  GPA: 3.3
+\end{itemize}
+
+\subsubsection{Bachelor of Computer
+Sciences}\label{bachelor-of-computer-sciences}
+
+\begin{itemize}
+\tightlist
+\item
+  Lakireddy Balareddy Engineering College, Bapatla
+\item
+  GPA: 3.0
+\end{itemize}
+
+\subsection{Projects}\label{projects}
+
+\subsubsection{Report on Containerization Technologies (Docker, Podman,
+and
+LXC/LXD)}\label{report-on-containerization-technologies-docker-podman-and-lxclxd}
+
+Docker containerization revolutionizes software delivery by providing
+secure, isolated environments for applications, ensuring portability
+across different platforms, and enhancing resource efficiency compared
+to virtual machines. It enables rapid scaling, fast development, and
+deployment cycles, and integrates seamlessly into CI/CD pipelines. This
+technology supports microservices architecture and fosters collaboration
+between development and operations teams, leading to more agile and
+reliable software delivery. Embracing Docker helps achieve greater
+efficiency and future-proofs applications in an evolving
+containerization landscape.
+
+\subsubsection{Restaurant Automation}\label{restaurant-automation}
+
+The main purpose of the proposed system is to allow the users that are
+managers, hosts, servers, busboys, and chefs to perform their
+responsibilities efficiently. This system will help managers to manage
+sales data, employee status, inventory data, and other administrative
+work. This will let the server lessen the burden of taking orders and
+sending them to the kitchen physically and running back and forth from
+the kitchen and table. It will allow the server to take orders and just
+send them to the chef without visiting the kitchen. The system allows
+the host to look at the status of the tables whether they are available
+or not.
+
+\subsection{Details}\label{details}
+
+\textbf{Email}:
+\href{mailto:neerajasai.magisetti@gmail.com}{\nolinkurl{neerajasai.magisetti@gmail.com}}\\
+\textbf{Contact}: +1 (256) 251-1244\\
+\textbf{LinkedIn}:
+\url{https://www.linkedin.com/in/neeraja-sai-magisetti-6a2711279}
+
+\subsection{Skills}\label{skills}
+
+\begin{itemize}
+\tightlist
+\item
+  Python Programming
+\item
+  C Programming
+\item
+  Pandas
+\item
+  HTML
+\item
+  SQL
+\item
+  DBMS
+\item
+  AWS
+\item
+  DevOps
+\item
+  Neural Networks
+\item
+  Data Structures
+\item
+  Leadership Skills
+\item
+  Microsoft Office
+\item
+  Agile Methodologies
+\end{itemize}
+
+\subsection{Languages}\label{languages}
+
+\begin{itemize}
+\tightlist
+\item
+  English
+\item
+  Telugu
+\end{itemize}
+
+
+
+
+\end{document}

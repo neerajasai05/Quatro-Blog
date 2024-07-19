@@ -1,0 +1,371 @@
+---
+title: "Report on Iris Data"
+author: "Neeraja Sai Magisetti"
+date: "2024-07-16"
+categories: [code, analysis]
+format:       
+   html:
+      code-fold: true
+jupyter: python3
+image: "iris.png"
+
+---
+# Image of Iris Flower
+![Iris](iris.png)
+This image shows three species of iris flowers and describes the petals and sepals of flower.
+
+## About Iris data
+The Iris data consists of measurements of iris flowers from three different species: Iris-setosa, Iris-versicolor, and Iris-virginica. 
+
+### Dataset Structure
+**Class**: The class refers to the species of the iris flower: 
+**Iris-setosa,**
+**Iris-versicolor,**
+**Iris-virginica,**
+
+**Features:** Sepal length, Sepal width, Petal length and Petal width.
+
+### Features Explanation
+
+**Sepal Length:**
+Length of the sepal in centimeters.
+Ranges from 4.3 to 7.9 cm in the dataset.
+Shows the length of the flower's sepal.
+
+**Sepal Width:**
+Width of the sepal in centimeters.
+Ranges from 2.0 to 4.4 cm in the dataset.
+Shows the width of the flower's sepal.
+
+**Petal Length:**
+Length of the petal in centimeters.
+Ranges from 1.0 to 6.9 cm in the dataset.
+Shows the length of the flower's petal.
+
+**Petal Width:**
+Width of the petal in centimeters.
+Ranges from 0.1 to 2.5 cm in the dataset.
+Shows the width of the flower's petal.
+
+### Species Breakdown
+**Iris-setosa:**
+Typically has smaller sepal lengths and widths compared to other species.
+Petal lengths and widths are also smaller.
+
+**Iris-versicolor:**
+Intermediate measurements compared to the other two species.
+Sepal lengths and widths are moderate, and petal sizes are moderate as well.
+
+**Iris-virginica:**
+Generally has larger sepal and petal measurements.
+Sepal lengths and widths are the largest in the dataset.
+Petal lengths and widths are also the largest.
+
+
+# Descriptive Statistics
+**Descriptive Statistics for iris data set**
+
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+import nbformat
+
+
+data = pd.read_csv('iris.data', delimiter=',', engine='python' )
+data.to_excel('iris.xlsx', index=False)
+columns = data.columns[data.columns != 'class']    
+grpdata = data.groupby(["class"])
+
+def statistics(data):
+        #numeric_columns = data.select_dtypes(include=['number']).columns
+        #print(numeric_columns)
+        mean_value = grpdata.mean(numeric_only= True)
+        median_value = grpdata.median(numeric_only= True)
+        mode_value = grpdata.apply(lambda x: x.mode().iloc[0] if not x.mode().empty else None, include_groups=False)
+        #mode_value = grpdata.mode().iloc[0]         
+        # Using f-strings to format the output
+        print(f"Mean value for each column: \n{mean_value}")
+        print("==========================================================")
+        print(f"Median value for each column: \n{median_value}")
+        print('===========================================================')
+        print(f"Mode value for each column: \n{mode_value}")     
+        for column in columns:
+            total_sum = grpdata[column].sum()     
+            std_value = grpdata[column].std()     
+            count_value = grpdata[column].count()
+            max_value = grpdata[column].max()
+            min_value = grpdata[column].min()
+            print("=========================================================")
+            print(f"Total sum of '{column}': {total_sum}")
+            print(f"Standard Deviation of '{column}': {std_value}")
+            print(f"Count value of '{column}': {count_value}")
+            print(f"Max Value of '{column}': {max_value}")
+            print(f"Min Value of '{column}': {min_value}")
+        return mean_value, median_value, mode_value
+
+mean_value, median_value, mode_value = statistics(data)
+
+```
+
+# About Histogram Plot
+Each histogram provides a visual of how the measurements of a specific feature (sepal length, sepal width, petal length, or petal width) are distributed across the three iris species:
+
+## Histogram Plot
+Histogram plot for iris data set
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+import nbformat
+
+
+data = pd.read_csv('iris.data', delimiter=',', engine='python' )
+data.to_excel('iris.xlsx', index=False)
+columns = data.columns[data.columns != 'class'] 
+grpdata = data.groupby(["class"])
+#print(data)
+key = {'Iris-setosa': 'Iris-setosa\n\nSepal Length:\nTypically has shorter sepal lengths compared to the other species. The histogram for Iris-setosa might show a peak in the lower range of sepal lengths, indicating that most of its samples have shorter sepals.\n\nSepal Width:\nOften has wider sepals compared to Iris-versicolor and Iris-virginica. The histogram for Iris-setosa might show higher frequencies in the wider range of sepal widths, indicating that most of its samples have broader sepals.\n\nPetal Length:\nCharacterized by relatively short petals. The histogram for Iris-setosa would show a peak in the lower range of petal lengths, reflecting that most samples have short petals.\n\nPetal Width:\nIt has relatively narrow petals. The histogram for Iris-setosa would show a peak in the lower range of petal widths, indicating that the petal width is generally smaller.', 'Iris-versicolor': 'Iris-versicolor\n\nSepal Length:\nThe sepal lengths for Iris-versicolor are generally intermediate between Iris-setosa and Iris-virginica. Its histogram might show a moderate range of sepal lengths, with some overlap with Iris-setosa but not extending as far as Iris-virginica.\n\nSepal Width:\nTypically has intermediate sepal widths. The histogram might show a narrower range of widths compared to Iris-setosa but wider than Iris-virginica.\n\nPetal Length:\nDisplays intermediate petal lengths. The histogram might show a distribution with moderate petal lengths, indicating that the petal length is neither too short nor too long.\n\nPetal Width:\nExhibits intermediate petal widths. The histogram might show a more balanced distribution, with petal widths being neither too narrow nor too wide.', 'Iris-virginica': 'Iris-virginica\n\nSepal Length:\nUsually has the longest sepals of the three species. The histogram for Iris-virginica would likely show a peak in the higher range of sepal lengths, indicating that this species tends to have longer sepals.\n\nSepal Width:\nGenerally has the narrowest sepals. The histogram for Iris-virginica might show peaks in the lower range of sepal widths, indicating that its samples tend to have narrower sepals.\n\nPetal Length:\nKnown for having the longest petals among the species. The histogram for Iris-virginica would likely show a peak in the higher range of petal lengths, indicating that this species typically has longer petals.\n\nPetal Width:\nTypically has the widest petals. The histogram for Iris-virginica would likely show a peak in the higher range of petal widths, indicating that this species tends to have broader petals.'}
+
+def histogram_plot(data):
+    for name, group in grpdata:
+        class_name = name if isinstance(name, str) else name[0]
+        class_key = key.get(class_name)
+        if class_key is not None:
+            print(class_key)
+        else:
+            print(f"No class_key found for {class_name}")
+        #print(class_name)
+        for column in columns:
+            plt.figure(figsize=(6,4))
+            plt.hist(group[column], bins=50, alpha=0.7, label=column)
+            plt.xlabel(column)
+            plt.ylabel('Frequency')
+            plt.title(f'Histogram of {column}')
+            plt.legend()
+            plt.show()
+
+histogram_plot(data)
+```
+
+# About Scatter Plot
+A scatter plot displays the relationship between two variables by using Cartesian coordinates. For the Iris dataset, scatter plots can be used to visualize the relationships between different pairs of features (sepal length, sepal width, petal length, and petal width) for each species of iris flowers (Iris-setosa, Iris-versicolor, and Iris-virginica).
+
+## Key Observations in Scatter Plots
+**Distinct Clusters for Each Species:**<br>
+
+**Iris-setosa:** Typically forms a distinct cluster, often separable from the other species due to its unique feature measurements.<br>
+
+**Iris-versicolor:** May overlap with both Iris-setosa and Iris-virginica but generally forms its own cluster in the feature space.<br>
+
+**Iris-virginica:** Often has the largest values for petal length and width, forming a cluster that may overlap with Iris-versicolor but is distinguishable from Iris-setosa.
+
+**Patterns and Relationships:**<br>
+
+**Sepal Length vs. Sepal Width:** This scatter plot can show how these two features correlate for each species. For example, Iris-setosa might show a specific pattern or cluster distinct from the other two species.<br>
+
+**Petal Length vs. Petal Width:** This is a particularly important plot as it often shows clear separation between the three species. Iris-setosa, having the smallest petal measurements, typically forms a separate cluster, while Iris-virginica, with the largest petals, forms another distinct group.<br>
+
+**Sepal vs. Petal Dimensions:** Plots like sepal length vs. petal length can reveal how these dimensions correlate within and across species, showing trends or clusters that help in distinguishing the species.
+
+## Example Insights:
+**Iris-setosa:**<br>
+
+**Petal Length vs. Petal Width:** This scatter plot often shows a clear cluster for Iris-setosa with smaller values, distinct from the other two species.
+Sepal Length vs. Sepal Width: Iris-setosa typically has a unique pattern, often forming a tight cluster that is easy to identify.<br>
+
+**Iris-versicolor:**
+
+**Petal Length vs. Petal Width:** The values for Iris-versicolor are usually intermediate, and the scatter plot might show some overlap with Iris-virginica but is generally separable.
+Sepal Length vs. Petal Length: This plot can help show the intermediate nature of Iris-versicolor’s features, forming a bridge between Iris-setosa and Iris-virginica.<br>
+
+**Iris-virginica:**
+
+**Petal Length vs. Petal Width:** Iris-virginica typically has the largest petal measurements, forming a distinct cluster on the higher end of the scatter plot.
+Sepal Width vs. Petal Width: This plot can reveal how the wider petals and sepals of Iris-virginica compare to the other species.
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+import nbformat
+
+
+data = pd.read_csv('iris.data', delimiter=',', engine='python' )
+data.to_excel('iris.xlsx', index=False)
+columns = data.columns[data.columns != 'class']    
+grpdata = data.groupby(["class"])
+    #print(data)
+
+def scatter_plot(data):
+    colors = ['r', 'g', 'b']  # Define more colors if there are more than 2 classes
+
+    for column1 in columns:
+        for column2 in columns:
+            if column1 != column2:
+                plt.figure(figsize=(7,7))  # Create a larger figure for better visualization
+                for name, group in grpdata:
+                    color_map = colors[:len(grpdata)]
+                    class_name = name if isinstance(name, str) else name[0]
+                    plt.scatter(group[column1], group[column2], label=class_name)
+                plt.title(f"Scatter Plot of {column1} and {column2}")
+                plt.xlabel(column1)
+                plt.ylabel(column2)
+                plt.legend()
+                plt.grid(True)
+                plt.show()
+
+
+
+scatter_plot(data)
+
+```
+
+
+## Box Plot Explanation for Iris Dataset
+A box plot (or box-and-whisker plot) is a standardized way of displaying the distribution of data based on a five-number summary: minimum, first quartile (Q1), median (Q2), third quartile (Q3), and maximum. It's particularly useful for comparing distributions between several groups or datasets.
+
+### Key Elements of a Box Plot
+
+**Box:**
+
+First Quartile (Q1): This is the value below which 25% of the data fall. It marks the lower end of the box.
+Median (Q2): This is the middle value of the dataset, dividing it into two equal halves. It is represented by the line inside the box.
+Third Quartile (Q3): This is the value below which 75% of the data fall. It marks the upper end of the box.
+
+**Whiskers:**
+
+The whiskers extend from the ends of the box to the minimum and maximum values in the data that are not considered outliers. Typically, these whiskers extend to 1.5 times the interquartile range (IQR) from Q1 and Q3, respectively.
+
+**Outliers:**
+
+Points that fall outside of the whiskers are considered outliers and are often plotted as individual dots.
+
+### Interpreting Box Plots for Iris Dataset Features
+
+**1. Sepal Length**
+
+**Iris-setosa:**
+
+The box plot for sepal length in Iris-setosa shows a relatively tight range, indicating less variability within this feature for this species. The median sepal length is on the shorter side compared to the other species.
+
+**Iris-versicolor:**
+
+This species has a wider range of sepal lengths compared to Iris-setosa, as indicated by a larger IQR. The median sepal length is intermediate, reflecting its position between Iris-setosa and Iris-virginica.
+
+**Iris-virginica:**
+
+The box plot for Iris-virginica shows the longest sepal lengths among the three species, with a higher median and a wider spread. This indicates more variability in sepal lengths within this species.
+
+**2. Sepal Width**
+
+**Iris-setosa:**
+
+The box plot for sepal width in Iris-setosa often shows wider sepals compared to the other species. The IQR and median reflect this, with less variability compared to sepal length.
+
+**Iris-versicolor:**
+
+Iris-versicolor has a more moderate range of sepal widths, with a median that is generally narrower than that of Iris-setosa but broader than Iris-virginica.
+
+**Iris-virginica:**
+
+
+The box plot for Iris-virginica typically shows the narrowest sepals. The median and IQR indicate this tendency, with the whiskers showing some overlap with the sepal widths of Iris-versicolor.
+
+**3. Petal Length**
+
+**Iris-setosa:**
+
+Petal length for Iris-setosa is quite short and has the least variability among the three species, as shown by a tight IQR and lower median value.
+
+**Iris-versicolor:**
+
+Iris-versicolor shows a wider range of petal lengths, with an intermediate median value. The box plot reflects greater variability compared to Iris-setosa.
+
+**Iris-virginica:**
+
+This species has the longest petal lengths, with the highest median and a wide IQR. The variability is also the greatest among the three species, as indicated by the spread of the whiskers.
+
+**4. Petal Width**
+
+**Iris-setosa:**
+
+The box plot for petal width in Iris-setosa shows narrow petals with low variability. The median and IQR reflect this, indicating that most samples have narrow petals.
+
+**Iris-versicolor:**
+
+Iris-versicolor has an intermediate range of petal widths, with a median and IQR that suggest more variability compared to Iris-setosa but less than Iris-virginica.
+
+**Iris-virginica:**
+
+The box plot for Iris-virginica shows the widest petals with a high median value. The spread of the data is larger, indicating more variability within this feature for this species.
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+import nbformat
+
+
+data = pd.read_csv('iris.data', delimiter=',', engine='python' )
+data.to_excel('iris.xlsx', index=False)
+columns = data.columns[data.columns != 'class'] 
+grpdata = data.groupby(["class"])
+    #print(data)
+
+def box_plot(data):
+    # Select only numeric columns
+    #numeric_columns = data.select_dtypes(include=['number']).columns
+    # Plot histogram for each numeric column
+    #numeric_data = data.select_dtypes(include='number')
+    #print(numeric_data)
+    for name, group in grpdata:
+        class_name = name if isinstance(name, str) else name[0]
+        print(class_name)
+        for column in columns:
+            plt.figure(figsize=(6, 4))
+            plt.boxplot(group[column])   #, tick_labels=numeric_columns
+            plt.title('Box Plot')
+            plt.xlabel(column)
+            plt.ylabel('Values')
+            plt.grid()
+            plt.show()
+
+box_plot(data)
+```
+
+## Line Plot
+Line plot for iris data set
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+import nbformat
+
+
+data = pd.read_csv('iris.data', delimiter=',', engine='python' )
+data.to_excel('iris.xlsx', index=False)
+columns = data.columns[data.columns != 'class'] 
+grpdata = data.groupby(["class"])
+    #print(data)
+
+def line_plot(data):
+    # Select only numeric columns
+    #numeric_columns = data.select_dtypes(include=['number']).columns
+    # Plot histogram for each numeric column
+    for name, group in grpdata:
+        print(name)
+        for column in columns:
+            plt.figure(figsize=(6, 6))
+            numeric_data = data.select_dtypes(include='number')
+            #print(numeric_data) numeric_data.index,
+            plt.plot(group[column], color='green' , label=column, linestyle='-', marker='o')
+            plt.title('Line Plot')
+            plt.xlabel('Index')
+            plt.ylabel(column)
+            plt.legend()
+            plt.grid(True)
+            plt.show()
+
+line_plot(data)
+
+```
+
