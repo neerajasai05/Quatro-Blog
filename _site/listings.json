@@ -2,11 +2,17 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/ploting/iris_data.html",
-      "/posts/ploting/wine_data.html",
+      "/posts/linear regression/linear.html",
+      "/posts/iris/iris_data.html",
+      "/posts/wine/wine_data.html",
+      "/Quatro-Blog/posts/iris/iris_data.html",
+      "/Quatro-Blog/posts/wine/wine_data.html",
       "/posts/Resume/CV.html",
+      "/Quatro-Blog/posts/Resume/CV.html",
       "/posts/post-with-code/index.html",
-      "/posts/welcome/index.html"
+      "/Quatro-Blog/posts/post-with-code/index.html",
+      "/posts/welcome/index.html",
+      "/Quatro-Blog/posts/welcome/index.html"
     ]
   }
 ]

@@ -1,0 +1,255 @@
+---
+title: "Building a Model Using Linear Regression for Car Price Prediction and Data Analysis"
+author: "Neeraja Sai Magisetti"
+date: "2024-07-29"
+categories: [code, analysis]
+format:       
+   html:
+      code-fold: true
+jupyter: python3
+image: car.png
+
+---
+
+## Problem Statement
+The dataset consists of various attributes related to different car models, such as their specifications, performance metrics, and price. Goal is to analyze and model this data to understand the factors that influence car prices and to predict the price of a car based on its features.
+
+Taken a CSV file containing accurate historical data, which includes features and their actual prices. Task is to use this data to build a model that can predict the prices of cars that are not part of this dataset. The goal is to develop a reliable predictive model that can estimate the selling price of any car based on its features.
+
+```{python}
+import pandas as pd
+data = pd.read_csv('imports-85.data', delimiter=',', engine='python' )
+print(data.head())
+```
+
+## Import Libraries
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+import seaborn as sns
+import statsmodels.api as sm
+```
+
+![Libraries](libraries.png)
+
+
+## Analysis and Visualization
+
+In order to understand the data that’s available, we must perform data analysis by visualizing the distribution of values in each feature, and the relationships between  price and other features. 
+
+```{python}
+print(data)
+```
+
+The dataset contains 205 rows and 26 columns. Each row in the dataset contains information about one car. The task is to find a way to estimate the value in the “Price” column using the values in the other columns. If we can do this estimation for historical data, then we should be able to estimate price for new cars that are not in this data too, simply by providing information like class, normalized-losses, make, fuel-type, aspiration,num-of-doors, body-style, drive-wheels, engine-location, wheel-base, length, width,height,curb-weight, engine-type, num-of-cylinders, engine-size, fuel-system, bore,stroke,compression-ratio, horsepower, peak-rpm, city-mpg, highway-mpg.
+
+## Data Cleaning and Preprocessing:
+1. Handle missing values in columns such as normalized-losses and price.<br>
+2. Convert categorical data into numerical formats.
+
+```{python}
+# Handle missing data
+import pandas as pd
+data = pd.read_csv('imports-85.data', delimiter=',')
+data.replace("?",'', inplace=True)
+#print(data)
+feature_columns = ['horsepower','bore','stroke','normalized-losses', 'price', 'peak-rpm']
+# Convert selected columns to numeric (if they aren't already)
+for col in feature_columns:
+        data[col] = pd.to_numeric(data[col], errors='coerce')
+#print(data)
+```
+
+In the dataset, some columns such as **price** and **horsepower** contain **"?"**.<br> Because of this, the columns are considered as objects, even though they contain numeric values. To overcome this issue, we should replace **?** with an **empty string**, and then convert the object columns to numeric using the **pd.to_numeric** function.<br>
+
+### Let’s check the data type of each column
+
+```{python}
+data.info()
+```
+
+We could see that class, normalized-losses, wheel-base, length, width, height, curb-weight, engine-size, bore,stroke, compression-ratio, horsepower, peak-rpm, city-mpg, highway-mpg,   price are **numeric** whereas  make, fuel-type, aspiration,num-of-doors, body-style, drive-wheels, engine-location, engine-type, num-of-cylinders, fuel-system are **objects**( string) possibly categorical columns.
+
+### Explore some statistics for the numerical columns:
+
+```{python}
+
+data.describe()
+
+
+```
+
+## Correlation
+
+The relationship between two numerical features such as price and hoursepower etc. can be numerically expressed using a measure called correlation coefficient, which can be computed using the .corr method from the pandas' library.
+
+**For example to compute the correlation coefficient of price and hoursepower:**
+
+![correlation_coefficient](correlation_coefficient.png)<br>
+
+This is for price and hoursepower.
+
+**Let's see correlation_coefficient for each numeric feature with price.**
+
+```{python}
+
+correlation_coefficient_columns = ['normalized-losses','wheel-base','length','width','height','curb-weight','engine-size','bore','stroke','compression-ratio','horsepower','peak-rpm','city-mpg','highway-mpg']
+for col in correlation_coefficient_columns:
+    correlation_coefficient = data['price'].corr(data[col])
+    print(f"Correlation between price and {col}: {correlation_coefficient}")
+
+```
+
+We could observe from the values above, that there’s a high correlation between **price** and **engine-size** but less correlation between **price** and **highway-mpg**.
+
+We can use the **.corr()** method to show the correlation coefficients between all pairs of numerical columns.
+
+```{python}
+
+data.corr(method='pearson',numeric_only=True)
+
+```
+
+## Visualization of above table using a heatmap.
+
+```{python}
+plt.figure(figsize=(12, 8))
+sns.heatmap(data.corr(method='pearson',numeric_only=True), cmap='Reds', annot=True)
+#print(data)
+plt.title('Correlation Matrix')
+
+
+```
+
+<br>
+
+In the correlation matrix, we observe that features like **horsepower, engine-size, curb-weight, and width** have high correlations with the price, close to **+1**, indicating a strong positive linear relationship. On the other hand, **length** is highly correlated with **wheel-base**, suggesting that including both in the model might lead to redundant information.
+
+If **length and wheel-base** provide overlapping information, adding both to the model may not improve its predictive power. Instead, the model might perform better with a combination of features that provide complementary information. For instance, **wheel-base and bore** might together explain different aspects of price variation that length does not capture.
+
+Therefore, the features **horsepower, engine-size, curb-weight, width, wheel-base, and bore** are chosen to build a more effective linear regression model.
+
+## Linear Regression using a Single Feature
+
+```{python}
+data = data.assign(price=data['price'].fillna(data['price'].mean()))
+data = data.assign(horsepower=data['horsepower'].fillna(data['horsepower'].mean()))
+data = data.assign(bore=data['bore'].fillna(data['bore'].mean()))
+
+# Independent variables
+X = data[['horsepower', 'engine-size','curb-weight', 'width', 'wheel-base','bore']] 
+#Dependent variable
+y = data['price']           
+
+# Split the data into training and validation sets
+X_train, X_val, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+```
+
+![Train_and_Test_data](Train_and_Test_data.png)<br>
+
+**Here we can see how train and test data splited** <br>
+
+## Training the model
+
+![Traing the Model](traing_model.png)
+
+```{python}
+model = LinearRegression()
+model.fit(X_train, y_train)
+# Make predictions on the training set
+y_train_pred = model.predict(X_train)
+
+# Make predictions on the testing set
+y_test_pred = model.predict(X_val)
+
+y_test_pred_series = pd.Series(y_test_pred, index=y_test.index)
+
+#print(y_test)
+#print(y_test_pred_series)
+
+```
+
+## Evaluation
+
+```{python}
+# Calculate Mean Squared Error
+train_mse = mean_squared_error(y_train, y_train_pred)
+test_mse = mean_squared_error(y_test, y_test_pred)
+
+# Calculate Mean Absolute Error
+train_mae = mean_absolute_error(y_train, y_train_pred)
+test_mae = mean_absolute_error(y_test, y_test_pred)
+
+# Calculate R² Score
+train_r2 = r2_score(y_train, y_train_pred)
+test_r2 = r2_score(y_test, y_test_pred)
+
+print(f"Training MSE: {train_mse}")
+print(f"Testing MSE: {test_mse}")
+
+```
+
+```{python}
+
+print(f"Training MAE: {train_mae}")
+print(f"Testing MAE: {test_mae}")
+
+```
+
+```{python}
+
+print(f"Training R²: {train_r2}")
+print(f"Testing R²: {test_r2}")
+
+```
+
+## Ploting
+
+```{python}
+# Plotting
+
+plt.figure(figsize=(8,6))
+# Plot training data and regression line
+plt.scatter(y_train_pred, y_train,  color='blue', edgecolor='w', alpha=0.6, label='Predicted Training Data')
+plt.plot([min(y_train), max(y_train)], [min(y_train), max(y_train)], color='red', linestyle='--', label='Perfect Fit Line')
+
+# Add title and labels
+plt.title('Training Data vs. Predictions')
+plt.xlabel('Predicted Price')
+plt.ylabel('Actual Price')
+plt.legend()
+plt.show()
+
+plt.figure(figsize=(8,6))
+# Plot training data and regression line
+plt.scatter(y_test_pred, y_test,  color='blue', edgecolor='w', alpha=0.6, label='Predicted Test Data')
+plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='red', linestyle='--', label='Perfect Fit Line')
+# Add title and labels
+plt.title('Test Data vs. Predictions')
+plt.xlabel('Predicted Price')
+plt.ylabel('Actual Price')
+plt.legend()
+plt.show()
+
+```
+
+
+### Using the statsmodels library to find the coefficients, standard errors, t-statistics, and p-values
+
+```{python}
+
+X = sm.add_constant(X)
+
+# Fit the model
+model = sm.OLS(y, X).fit()
+
+# Print the summary
+print(model.summary())
+```
