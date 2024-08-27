@@ -1,19 +1,20 @@
 ---
-title: "About"
-image: profile.jpg
+title: "About me"
+image: Neeraja.jpg
 about:
   template: jolla
   links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
+      href: https://www.linkedin.com/in/neeraja-sai-m-6a2711279
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/
 
 ---
 
-About this blog
+Welcome to my blog! Here, I explore a variety of topics related to data science and software development. From detailed tutorials on linear regression and data visualization to insights on using Python libraries like pandas and scikit-learn, my goal is to provide valuable resources for both newcomers and seasoned professionals in the field.
+
+I also share updates and findings from my projects, including practical applications and lessons learned. Whether you’re here to enhance your skills or stay informed about the latest trends, you’ll find content designed to educate and inspire.
+
+**Thank you for visiting, and I hope you find the information here both useful and engaging!**
